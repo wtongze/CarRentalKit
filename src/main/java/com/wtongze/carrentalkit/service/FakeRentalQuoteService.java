@@ -1,6 +1,7 @@
 package com.wtongze.carrentalkit.service;
 
 import com.wtongze.carrentalkit.model.CarType;
+import com.wtongze.carrentalkit.model.RentalLocation;
 import com.wtongze.carrentalkit.model.RentalQuote;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -19,7 +20,7 @@ public class FakeRentalQuoteService implements RentalQuoteService {
 
     @Override
     public Flux<RentalQuote> getStandardQuotes(String location, Timestamp start, Timestamp end, String promotionCode) {
-        return this.getOneWayQuotes(location, location, start, end, promotionCode);
+        return this.getOneWayQuotes(location, null, start, end, promotionCode);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class FakeRentalQuoteService implements RentalQuoteService {
         List<RentalQuote> quotes = new ArrayList<>();
         int count = r.nextInt(1, 5);
         for (int i = 0; i < count; i++) {
-            quotes.add(new RentalQuote(pickUpLocation, dropOffLocation, randomCarType(), randomPrice()));
+            quotes.add(new RentalQuote(new RentalLocation(), new RentalLocation(), randomCarType(), randomPrice()));
         }
         return Flux.fromIterable(quotes);
     }

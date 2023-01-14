@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RentalQuote {
-    private String pickUpLocation;
-    private String dropOffLocation;
+    private RentalLocation pickUpLocation;
+    private RentalLocation dropOffLocation;
     private CarType carType;
     private Float price;
 }
