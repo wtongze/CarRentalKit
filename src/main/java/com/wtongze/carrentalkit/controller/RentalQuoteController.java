@@ -1,6 +1,8 @@
 package com.wtongze.carrentalkit.controller;
 
+import com.wtongze.carrentalkit.model.RentalLocation;
 import com.wtongze.carrentalkit.model.RentalQuote;
+import com.wtongze.carrentalkit.repository.RentalLocationRepository;
 import com.wtongze.carrentalkit.service.RentalQuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,16 @@ public class RentalQuoteController {
     private final RentalQuoteService quoteService;
 
     @Autowired
+    private RentalLocationRepository locationRepository;
+
+    @Autowired
     public RentalQuoteController(RentalQuoteService quoteService) {
         this.quoteService = quoteService;
+    }
+
+    @GetMapping("/test")
+    public Flux<RentalLocation> testLocation() {
+        return locationRepository.findAll();
     }
 
     @GetMapping("/standard")
