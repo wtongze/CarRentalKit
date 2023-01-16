@@ -4,7 +4,6 @@ import com.wtongze.carrentalkit.model.*;
 import com.wtongze.carrentalkit.model.QuoteService.Data;
 import com.wtongze.carrentalkit.model.QuoteService.Session;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,29 +12,33 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class ComplexRentalQuoteService implements RentalQuoteService {
     private final WebClient webClient;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
 
     public ComplexRentalQuoteService(@Value("${QUOTE_SERVICE_ENDPOINT:http://localhost:3000}") String endpoint) {
         this.webClient = WebClient.create(endpoint);
     }
 
     @Override
-    public Flux<RentalQuote> getStandardQuotes(String location, Timestamp start, Timestamp end, String promotionCode) {
+    public Flux<RentalQuote> getStandardQuotes(String location, LocalDateTime start, LocalDateTime end, String promotionCode) {
         return this.getOneWayQuotes(location, null, start, end, promotionCode);
     }
 
     @Override
-    public Flux<RentalQuote> getOneWayQuotes(String pickUpLocation, String dropOffLocation, Timestamp start, Timestamp end, String promotionCode) {
+    public Flux<RentalQuote> getOneWayQuotes(String pickUpLocation, String dropOffLocation, LocalDateTime start, LocalDateTime end, String promotionCode) {
         MultiValueMap<String, String> basicParams = new LinkedMultiValueMap<>();
         basicParams.add("pickup.location", pickUpLocation);
-        basicParams.add("dropoff.location", "");
-        basicParams.add("pickup.date", "2023-01-20");
-        basicParams.add("pickup.time", "1400");
-        basicParams.add("dropoff.date", "2023-01-21");
-        basicParams.add("dropoff.time", "1400");
+        basicParams.add("dropoff.location", dropOffLocation == null ? "" : dropOffLocation);
+        basicParams.add("pickup.date", start.format(dateFormatter));
+        basicParams.add("pickup.time", start.format(timeFormatter));
+        basicParams.add("dropoff.date", end.format(dateFormatter));
+        basicParams.add("dropoff.time", end.format(timeFormatter));
         basicParams.add("promotion.code", promotionCode == null ? "" : promotionCode);
         basicParams.add("loyaltyNum", "");
         basicParams.add("tqs2", "true");

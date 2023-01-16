@@ -6,7 +6,7 @@ import com.wtongze.carrentalkit.model.RentalQuote;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,12 +19,12 @@ public class SimpleRentalQuoteService implements RentalQuoteService {
     private final Random r = new Random();
 
     @Override
-    public Flux<RentalQuote> getStandardQuotes(String location, Timestamp start, Timestamp end, String promotionCode) {
+    public Flux<RentalQuote> getStandardQuotes(String location, LocalDateTime start, LocalDateTime end, String promotionCode) {
         return this.getOneWayQuotes(location, null, start, end, promotionCode);
     }
 
     @Override
-    public Flux<RentalQuote> getOneWayQuotes(String pickUpLocation, String dropOffLocation, Timestamp start, Timestamp end, String promotionCode) {
+    public Flux<RentalQuote> getOneWayQuotes(String pickUpLocation, String dropOffLocation, LocalDateTime start, LocalDateTime end, String promotionCode) {
         List<RentalQuote> quotes = new ArrayList<>();
         int count = r.nextInt(1, 5);
         for (int i = 0; i < count; i++) {
