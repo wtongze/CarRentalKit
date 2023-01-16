@@ -10,6 +10,7 @@ import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
 import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
