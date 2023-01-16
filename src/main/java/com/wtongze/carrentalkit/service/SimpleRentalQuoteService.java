@@ -14,8 +14,8 @@ import java.util.Random;
 /**
  * A service that provides fake rental quotes.
  */
-@Service("FakeRentalQuoteService")
-public class FakeRentalQuoteService implements RentalQuoteService {
+@Service
+public class SimpleRentalQuoteService implements RentalQuoteService {
     private final Random r = new Random();
 
     @Override
@@ -28,7 +28,7 @@ public class FakeRentalQuoteService implements RentalQuoteService {
         List<RentalQuote> quotes = new ArrayList<>();
         int count = r.nextInt(1, 5);
         for (int i = 0; i < count; i++) {
-            quotes.add(new RentalQuote(new RentalLocation(), new RentalLocation(), randomCarType(), randomPrice()));
+            quotes.add(new RentalQuote(new RentalLocation(), new RentalLocation(), randomCarType(), randomPrice(), false));
         }
         return Flux.fromIterable(quotes);
     }

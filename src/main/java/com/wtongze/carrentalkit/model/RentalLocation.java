@@ -1,6 +1,7 @@
 package com.wtongze.carrentalkit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wtongze.carrentalkit.model.QuoteService.Location;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -10,6 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class RentalLocation {
     /**
      * ID of the rental location
+     *
      * @example 1
      */
     @JsonIgnore
@@ -18,25 +20,42 @@ public class RentalLocation {
 
     /**
      * Name of the rental location
+     *
      * @example San Jose Airport Branch
      */
     private String name;
 
     /**
      * Full address of the rental location
+     *
      * @example 123 Main St, San Jose, CA
      */
     private String address;
 
     /**
      * Latitude of the rental location
+     *
      * @example 37.363949
      */
-    private Float latitude;
+    private Double latitude;
 
     /**
      * Longitude of the rental location
+     *
      * @example -121.928940
      */
-    private Float longitude;
+    private Double longitude;
+
+    public static RentalLocation fromQuoteServiceLocation(Location location) {
+        if (location == null) {
+            return null;
+        } else {
+            RentalLocation rentalLocation = new RentalLocation();
+            rentalLocation.setName(location.getAddress().getName());
+            rentalLocation.setAddress(location.getAddress().getFull());
+            rentalLocation.setLatitude(location.getLocationNumbers().getLatitude());
+            rentalLocation.setLongitude(location.getLocationNumbers().getLongitude());
+            return rentalLocation;
+        }
+    }
 }
