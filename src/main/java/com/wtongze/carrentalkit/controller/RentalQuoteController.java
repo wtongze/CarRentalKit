@@ -23,6 +23,7 @@ public class RentalQuoteController {
     private RentalLocationRepository locationRepository;
 
     @GetMapping("/test")
+    @PreAuthorize("hasRole('USER')")
     public Flux<RentalLocation> testLocation() {
         return locationRepository.findAll();
     }
