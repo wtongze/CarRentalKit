@@ -1,6 +1,7 @@
 package com.wtongze.carrentalkit;
 
 import io.r2dbc.spi.ConnectionFactory;
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

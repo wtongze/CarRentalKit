@@ -4,5 +4,10 @@
 
 This is the backend API implementation using Spring framework in Java.
 
-- Spring Web
+
+## Tech Stack
 - Spring WebFlux
+- Spring Data R2DBC
+- Spring Security
+- JSON Web Tokens
+- springdoc-openapi

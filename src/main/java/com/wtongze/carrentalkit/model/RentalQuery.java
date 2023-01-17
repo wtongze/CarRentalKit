@@ -3,6 +3,7 @@ package com.wtongze.carrentalkit.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wtongze.carrentalkit.validation.FutureLocalDateTime;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
