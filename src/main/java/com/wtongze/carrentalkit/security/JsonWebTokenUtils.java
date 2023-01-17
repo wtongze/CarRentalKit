@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Component
 public class JsonWebTokenUtils {
@@ -15,10 +17,15 @@ public class JsonWebTokenUtils {
     private final JWTVerifier verifier = JWT.require(algorithm).build();
 
     public String createToken(UserDetails userDetails) {
+        var roles = new ArrayList<String>();
+        for (var auth : userDetails.getAuthorities()) {
+            roles.add(auth.getAuthority());
+        }
         return JWT.create()
                 .withSubject(userDetails.getUsername())
+                .withClaim("roles", roles)
                 .withIssuedAt(Instant.now())
-                .withExpiresAt(Instant.now().plusSeconds(60 * 5))
+                .withExpiresAt(Instant.now().plusSeconds(60 * 20))
                 .sign(algorithm);
     }
 

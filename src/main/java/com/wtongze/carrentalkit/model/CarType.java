@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * Based on Hertz's car type.
  * */
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+//@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum CarType {
     MANAGER_SPECIAL("A6", "EXAR", "Manager Special"),
     ECONOMY("A", "ECAR", "Chevrolet Spark or similar"),
