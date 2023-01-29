@@ -1,8 +1,9 @@
 package com.wtongze.carrentalkit.service;
 
-import com.wtongze.carrentalkit.model.*;
+import com.wtongze.carrentalkit.model.CarType;
 import com.wtongze.carrentalkit.model.QuoteService.Data;
 import com.wtongze.carrentalkit.model.QuoteService.Session;
+import com.wtongze.carrentalkit.model.RentalQuote;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -11,9 +12,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ComplexRentalQuoteService implements RentalQuoteService {
@@ -52,6 +54,8 @@ public class ComplexRentalQuoteService implements RentalQuoteService {
         addiParams.add("cityView", "listView");
         addiParams.add("transmission", "Automatic");
 
+        Set<CarType> carTypeSet = new HashSet<>();
+
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder.path("/car/availability/results").queryParams(basicParams).build())
@@ -79,6 +83,14 @@ public class ComplexRentalQuoteService implements RentalQuoteService {
                         .retrieve().bodyToMono(Data.class))
                 .flux()
                 .flatMap(data -> Flux.fromArray(data.getResults()))
-                .map(RentalQuote::fromQuoteServiceResult);
+                .map(RentalQuote::fromQuoteServiceResult).filter(data -> {
+                    var type = data.getCarType();
+                    if (carTypeSet.contains(type)) {
+                        return false;
+                    } else {
+                        carTypeSet.add(type);
+                        return true;
+                    }
+                });
     }
 }

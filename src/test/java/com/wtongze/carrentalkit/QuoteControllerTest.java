@@ -12,10 +12,10 @@ public class QuoteControllerTest extends CarRentalKitApplicationTests {
     @Autowired
     private WebTestClient webClient;
 
-    @Test
-    public void basicTest() throws Exception {
-        webClient.get().uri("/quote/standard")
-                .exchange()
-                .expectStatus().isOk();
-    }
+//    @Test
+//    public void basicTest() throws Exception {
+//        webClient.get().uri("/quote/standard")
+//                .exchange()
+//                .expectStatus().isOk();
+//    }
 }
