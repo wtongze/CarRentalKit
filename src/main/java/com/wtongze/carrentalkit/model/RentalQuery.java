@@ -14,11 +14,13 @@ import java.time.LocalDateTime;
 @Data
 public class RentalQuery {
     @FutureLocalDateTime
+    
     private LocalDateTime start;
 
     private LocalDateTime end;
 
     @NotNull
+    @Parameter(description = "Pickup Location")
     private String pickupLocation = "San Jose, CA, USA";
 
     private String promotionCode;
